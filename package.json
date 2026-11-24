@@ -1,0 +1,43 @@
+{
+  "name": "pharmachain-mvp",
+  "version": "0.2.0",
+  "description": "PharmaChain OS - MVP of the AI-native 4-stage pharma supply chain suite (API plant -> Formulator/C&F -> Stockist -> Pharmacy) with Metro-Line Control Tower, Entity Data Lake and an open REST API.",
+  "main": "desktop/main.js",
+  "private": true,
+  "scripts": {
+    "build": "tsc -p web && vite build --config web/vite.config.mts",
+    "start": "npm run build && node server/index.js",
+    "serve": "node server/index.js",
+    "dev": "vite --config web/vite.config.mts",
+    "desktop": "npm run build && electron .",
+    "typecheck": "tsc -p web",
+    "test": "node --test \"tests/*.test.js\"",
+    "dist": "npm run build && npx --yes electron-builder@25.1.8 --win portable"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "electron": "^33.2.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.11"
+  },
+  "build": {
+    "appId": "com.pharmachain.mvp",
+    "productName": "PharmaChain OS",
+    "files": [
+      "server/**",
+      "dist-web/**",
+      "desktop/**",
+      "package.json"
+    ],
+    "win": {
+      "target": "portable"
+    }
+  }
+}
