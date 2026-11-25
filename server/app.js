@@ -124,6 +124,16 @@ function createApp({ dataDir, tickMs = 1000 } = {}) {
 
   api.use((req, res) => res.status(404).json({ error: `No route ${req.method} ${req.path}` }));
   app.use('/api/v1', api);
+
+  // Android Trusted Web Activity: Digital Asset Links proving this site owns the Play Store app.
+  // The real file holds your package name + signing-key fingerprint, so it lives (git-ignored) at
+  // <project>/assetlinks.json on the server. See assetlinks.example.json.
+  const assetLinksFile = process.env.ASSETLINKS_FILE || path.join(__dirname, '..', 'assetlinks.json');
+  app.get('/.well-known/assetlinks.json', (req, res) => {
+    if (!fs.existsSync(assetLinksFile)) return res.status(404).json({ error: 'assetlinks.json not configured on this server' });
+    res.type('application/json').sendFile(path.resolve(assetLinksFile));
+  });
+
   // React frontend (built by Vite into dist-web/)
   const webDir = path.join(__dirname, '..', 'dist-web');
   app.use(express.static(webDir));

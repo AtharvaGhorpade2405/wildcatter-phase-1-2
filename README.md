@@ -13,6 +13,17 @@ It comes in three forms, all running the same code:
 | **Web / mobile app** (installable PWA, responsive) | `npm start` → open http://localhost:4600 → browser menu → *Install app* |
 | **REST API + live event stream** for other developers | `http://localhost:4600/api/v1` · spec at `/api/v1/openapi.json` · docs in the app under *Developer API* |
 
+## Publishing to Google Play (Trusted Web Activity)
+
+The deployed site can be wrapped as an Android app with [PWABuilder](https://www.pwabuilder.com):
+
+1. Deploy over HTTPS. The manifest already has the 192/512 PNG icons (normal + maskable) Android needs.
+2. In PWABuilder, enter your site URL, choose **Android**, and download the generated package (`.aab`) and its `assetlinks.json`.
+3. On the server, save that file as `assetlinks.json` in the project folder (see `assetlinks.example.json`; it is git-ignored). Express serves it at `/.well-known/assetlinks.json`, which removes the browser bar inside the app. No rebuild or restart is needed.
+4. In Play Console, use `https://<your-domain>/privacy.html` as the privacy policy URL, then upload the `.aab`.
+
+If Play App Signing re-signs the app, add Play Console's SHA-256 fingerprint (Setup → App signing) to `sha256_cert_fingerprints` too.
+
 ## Tech stack
 
 | Layer | Choice |

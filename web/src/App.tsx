@@ -57,7 +57,10 @@ export function App() {
             );
           })}
         </nav>
-        <div className="side-foot"><span className={`live-dot ${connected ? 'on' : ''}`} />{connected ? 'Live · connected to mesh' : 'Reconnecting…'}</div>
+        <div className="side-foot">
+          <span className={`live-dot ${connected ? 'on' : ''}`} />{connected ? 'Live · connected to mesh' : 'Reconnecting…'}
+          <div style={{ marginTop: 6 }}><a href="./privacy.html" style={{ color: 'inherit' }}>Privacy policy</a></div>
+        </div>
       </aside>
       <main id="view"><route.Page key={route.path} /></main>
     </>

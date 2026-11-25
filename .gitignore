@@ -4,3 +4,4 @@ dist/
 dist-web/
 *.tmp
 .claude/
+assetlinks.json
